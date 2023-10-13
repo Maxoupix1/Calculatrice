@@ -2,36 +2,46 @@ package Model;
 import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface{
-	public Stack<Integer> accu;
+	public Stack<Double> accu;
 	
-	public CalculatorModel(Stack<Integer> accu) {
+	public CalculatorModel(Stack<Double> accu) {
 		
 		this.accu = accu;
 	}
 	
 	public void add() {
-		
+		double a = this.pop();
+		double b = this.pop();
+		this.push(a+b);
 	}
 	public void substract() {
-		
+		double a = this.pop();
+		double b = this.pop();
+		this.push(a-b);
 	}
 	public void multiply() {
-		
+		double a = this.pop();
+		double b = this.pop();
+		this.push(a*b);
 	}
 	public void divide() {
-		
+		double a = this.pop();
+		double b = this.pop();
+		this.push(a/b);
 	}
 	
 	public void opposite() {
-		
+		Double a = accu.lastElement();
+		this.drop();
+		accu.push(-a);
 	}
 	
-	public void push(int i) {
+	public void push(double i) {
 		accu.push(i);
 		
 	}
 	
-	public int pop() {
+	public double pop() {
 		return accu.pop();	
 	}
 	
@@ -41,11 +51,11 @@ public class CalculatorModel implements CalculatorModelInterface{
 	}
 	
 	public void swap() {
-		Integer a = accu.lastElement();
+		Double a = accu.lastElement();
 		this.drop();
-		Integer b = accu.lastElement();
+		Double b = accu.lastElement();
 		this.drop();
-		Integer c = a;
+		Double c = a;
 		a = b;
 		b = c;
 		this.push(b);
@@ -56,5 +66,9 @@ public class CalculatorModel implements CalculatorModelInterface{
 	
 	public void clear() {
 		accu.clear();
+	}
+	
+	public int length() {
+		return accu.size();
 	}
 }
