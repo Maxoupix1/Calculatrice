@@ -1,66 +1,69 @@
 package view;
 
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import javafx.scene.control.ScrollPane;
 import controler.Controler;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.geometry.*;
+
 
 
 public class CalculatorGUI{
 	
 	public ArrayList<Button> listeBouton;
 	public Controler controler;
-	public Label texte = new Label("resultat");
+	public Label output = new Label("Pile : ");
+	public Label input = new Label("Entrée : ");
 	
-	public CalculatorGUI() {
+	public CalculatorGUI(Controler controler) {
 		this.listeBouton = new ArrayList<>();
+		this.controler = controler;
 	}
 	
 	
 	public void affichage() {
 		Stage st = new Stage();
-		st.setTitle("Calculatrice");
-		GridPane gp = new GridPane();
+		st.setTitle("Calculatrice");				
+		
+		VBox buttonBox = new VBox(10);
+        buttonBox.setAlignment(Pos.CENTER);
 
-		Button btn_plus = new Button("+");
-		Button btn_moins = new Button("-");
-		Button btn_multiplier = new Button("*");
-		Button btn_diviser = new Button("/");
-		Button btn_plusmoins = new Button("+/-");
-		Button btn_entrer = new Button("Entrer");
-		Button btn_decimal = new Button(",");
-		Button btn_c = new Button("C");
+        String[][] buttonLabels = {
+            {"7", "8", "9", "+"},
+            {"4", "5", "6", "-"},
+            {"1", "2", "3", "*"},
+            {"C", "0", ".", "/"},
+            {"Entrer", "+/-"}
+        };
+
+        for (String[] row : buttonLabels) {
+            HBox rowBox = new HBox(10);
+            rowBox.setAlignment(Pos.CENTER);
+            for (String label : row) {
+                Button button = new Button(label);
+                button.setMinSize(50, 50);
+                button.setOnAction(controler);
+                rowBox.getChildren().add(button);
+            }
+            buttonBox.getChildren().add(rowBox);
+        }
+        
+        ScrollPane s1 = new ScrollPane();
+        s1.setPrefSize(120, 120);
+        s1.setContent(output);
+        
+        VBox mainLayout = new VBox(10);
+        mainLayout.setAlignment(Pos.CENTER);
+        mainLayout.getChildren().addAll(s1, input, buttonBox);
+
+        Scene scene = new Scene(mainLayout, 400, 500);
 		
-		for (int i = 0; i < 10; i++) {
-			listeBouton.add(new Button());
-			listeBouton.get(i).setText(String.valueOf(i));
-		}
-		
-		
-		listeBouton.addAll(Arrays.asList(btn_plus,btn_moins,btn_multiplier,btn_diviser,btn_plusmoins,btn_entrer,btn_decimal,btn_c));
-		
-		for (int i = 0; i < listeBouton.size(); i++) {
-			listeBouton.get(i).setMaxSize(50, 50);
-			listeBouton.get(i).setOnAction(controler);
-			gp.add(listeBouton.get(i), (100-i)%3, (100-i)/3);
-		}
-		gp.add(texte, 0, 0);
-		texte.setMinSize(100, 100);
-		
-		Scene sc=new Scene(gp, 500, 500);
-		st.setScene(sc);
+		st.setScene(scene);
 		st.show();
 	}
 	

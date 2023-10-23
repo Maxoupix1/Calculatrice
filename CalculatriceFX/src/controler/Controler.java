@@ -2,6 +2,8 @@ package controler;
 
 
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -13,14 +15,14 @@ public class Controler implements EventHandler<ActionEvent>{
 
 	public CalculatorGUI gui;
 	public CalculatorModel calc;
+	public String memoire;
 
 	
 	public Controler() {
-		this.gui = new CalculatorGUI();
+		this.gui = new CalculatorGUI(this);
 		this.calc = new CalculatorModel();
-		gui.controler = this;
+		this.memoire = "";
 		gui.affichage();
-		
 	}
 	
 
@@ -35,7 +37,8 @@ public class Controler implements EventHandler<ActionEvent>{
 				case "+" :
 					if (calc.length() > 1) {
 						calc.add();
-						gui.texte.setText(String.valueOf(calc.accu.peek()));
+						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						memoire = "";
 						break;
 					}
 					else {
@@ -45,7 +48,8 @@ public class Controler implements EventHandler<ActionEvent>{
 				case "-" :
 					if (calc.accu.size() > 1) {
 						calc.substract();
-						gui.texte.setText(String.valueOf(calc.accu.peek()));
+						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						memoire = "";
 						break;
 					}
 					else {
@@ -55,7 +59,8 @@ public class Controler implements EventHandler<ActionEvent>{
 				case "*" :
 					if (calc.accu.size() > 1) {
 						calc.multiply();
-						gui.texte.setText(String.valueOf(calc.accu.peek()));
+						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						memoire = "";
 						break;
 					}
 					else {
@@ -65,7 +70,8 @@ public class Controler implements EventHandler<ActionEvent>{
 				case "/" :
 					if (calc.accu.size() > 1) {
 						calc.divide();
-						gui.texte.setText(String.valueOf(calc.accu.peek()));
+						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						memoire = "";
 						break;
 					}
 					else {
@@ -73,18 +79,49 @@ public class Controler implements EventHandler<ActionEvent>{
 					}
 					
 				case "+/-" :
-					if (calc.accu.size() > 1) {
-						calc.opposite();
-						gui.texte.setText(String.valueOf(calc.accu.peek()));
+					if (memoire != "") {
+						if (memoire.charAt(0) == '-') {
+							memoire = memoire.replaceFirst("-", "");
+						}else {
+							memoire = "-" + memoire;
+						}
+					}
+					gui.input.setText("Entrée : " + memoire);
+					break;
+
+					
+				
+				case "." :
+					if (memoire.indexOf(".") == -1) {
+						memoire += ".";
+					}else {
 						break;
 					}
-					else {
+					gui.input.setText("Entrée : " + memoire);
+					break;
+					
+				case "C" :
+					memoire = "";
+					gui.input.setText("Entrée : " + memoire);
+					break;
+				
+				case "Entrer" :
+					if ((memoire == ".")) {
+						System.out.println(memoire);
 						break;
+					}else {
+						System.out.println(memoire);
+						calc.push(Double.valueOf(memoire));
+						memoire = "";
+						gui.input.setText("Entrée : " + memoire);
+						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						break;	
 					}
 					
+					
 				default :
-					calc.push(Double.valueOf(trigger.getText()));
-					gui.texte.setText(String.valueOf(calc.accu.peek()));
+					memoire += (trigger.getText());
+					gui.input.setText("Entrée : " + memoire);
 					break;
 			}
 			

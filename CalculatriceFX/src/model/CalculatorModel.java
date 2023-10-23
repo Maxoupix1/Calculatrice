@@ -2,11 +2,11 @@ package model;
 import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface{
-	public Stack<Double> accu;
+	public Pile accu;
 	
 	public CalculatorModel() {
 		
-		this.accu = new Stack<Double>() ;
+		this.accu = new Pile() ;
 	}
 	
 	public void add() {
@@ -27,18 +27,18 @@ public class CalculatorModel implements CalculatorModelInterface{
 	public void divide() {
 		double a = this.pop();
 		double b = this.pop();
-		this.push(a/b);
+		if (b==0) {
+			this.push(b);
+			this.push(a);
+		}else {
+			this.push(a/b);
+		}
+		
 	}
 	
-	public void opposite() {
-		Double a = accu.lastElement();
-		this.drop();
-		accu.push(-a);
-	}
 	
 	public void push(double i) {
 		accu.push(i);
-		
 	}
 	
 	public double pop() {
