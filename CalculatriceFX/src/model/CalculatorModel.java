@@ -4,9 +4,9 @@ import java.util.Stack;
 public class CalculatorModel implements CalculatorModelInterface{
 	public Stack<Double> accu;
 	
-	public CalculatorModel(Stack<Double> accu) {
+	public CalculatorModel() {
 		
-		this.accu = accu;
+		this.accu = new Stack<Double>() ;
 	}
 	
 	public void add() {
@@ -46,8 +46,7 @@ public class CalculatorModel implements CalculatorModelInterface{
 	}
 	
 	public void drop() {
-		accu.remove(accu.indexOf(accu.lastElement()));
-		
+		accu.remove(accu.indexOf(accu.lastElement()));	
 	}
 	
 	public void swap() {
