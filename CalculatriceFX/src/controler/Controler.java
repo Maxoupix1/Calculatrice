@@ -106,7 +106,7 @@ public class Controler implements EventHandler<ActionEvent>{
 					break;
 				
 				case "Entrer" :
-					if ((memoire == ".")) {
+					if ((memoire == ".")||(memoire == "")) {
 						System.out.println(memoire);
 						break;
 					}else {
