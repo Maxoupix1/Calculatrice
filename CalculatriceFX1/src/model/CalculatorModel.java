@@ -1,5 +1,5 @@
 package model;
-import java.util.Stack;
+
 
 public class CalculatorModel implements CalculatorModelInterface{
 	public Pile accu;
@@ -70,10 +70,8 @@ public class CalculatorModel implements CalculatorModelInterface{
 	public int length() {
 		return accu.size();
 	}
-
-	@Override
-	public void opposite() {
-		// TODO Auto-generated method stub
-		
+	
+	public Pile getAccu() {
+		return accu;
 	}
 }

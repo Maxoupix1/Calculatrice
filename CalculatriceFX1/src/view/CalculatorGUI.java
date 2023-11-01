@@ -4,25 +4,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.control.ScrollPane;
 import controler.Controler;
+import controler.ControlerInterface;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.*;
 
 
 
-public class CalculatorGUI{
+public class CalculatorGUI implements CalculatorGUIInterface{
 	
 	public ArrayList<Button> listeBouton;
-	public Controler controler;
+	public ControlerInterface controler;
 	public Label output = new Label("Pile : ");
 	public Label input = new Label("Entrée : ");
 	
-	public CalculatorGUI(Controler controler) {
+	public CalculatorGUI() {
 		this.listeBouton = new ArrayList<>();
-		this.controler = controler;
 	}
 	
 	
@@ -47,7 +49,7 @@ public class CalculatorGUI{
             for (String label : row) {
                 Button button = new Button(label);
                 button.setMinSize(50, 50);
-                button.setOnAction(controler);
+                button.setOnAction((EventHandler<ActionEvent>) controler);
                 rowBox.getChildren().add(button);
             }
             buttonBox.getChildren().add(rowBox);
@@ -65,6 +67,20 @@ public class CalculatorGUI{
 		
 		st.setScene(scene);
 		st.show();
+	}
+
+
+	@Override
+	public Label getOutput() {
+		// TODO Auto-generated method stub
+		return output;
+	}
+
+
+	@Override
+	public Label getInput() {
+		// TODO Auto-generated method stub
+		return input;
 	}
 	
 

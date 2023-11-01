@@ -2,25 +2,23 @@ package controler;
 
 
 
-import java.util.ArrayList;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import model.CalculatorModel;
-import view.CalculatorGUI;
+import model.CalculatorModelInterface;
+import view.CalculatorGUIInterface;
 
 
-public class Controler implements EventHandler<ActionEvent>{
+public class Controler implements EventHandler<ActionEvent>, ControlerInterface{
 
-	public CalculatorGUI gui;
-	public CalculatorModel calc;
+	public CalculatorGUIInterface gui;
+	public CalculatorModelInterface calc;
 	public String memoire;
 
 	
-	public Controler() {
-		this.gui = new CalculatorGUI(this);
-		this.calc = new CalculatorModel();
+	public Controler(CalculatorGUIInterface gui, CalculatorModelInterface model) {
+		this.gui = gui;
+		this.calc = model;
 		this.memoire = "";
 		gui.affichage();
 	}
@@ -37,7 +35,7 @@ public class Controler implements EventHandler<ActionEvent>{
 				case "+" :
 					if (calc.length() > 1) {
 						calc.add();
-						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						gui.getOutput().setText("Pile :\n" +  calc.getAccu().toString());
 						memoire = "";
 						break;
 					}
@@ -46,9 +44,9 @@ public class Controler implements EventHandler<ActionEvent>{
 					}
 					
 				case "-" :
-					if (calc.accu.size() > 1) {
+					if (calc.getAccu().size() > 1) {
 						calc.substract();
-						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						gui.getOutput().setText("Pile :\n" +  calc.getAccu().toString());
 						memoire = "";
 						break;
 					}
@@ -57,9 +55,9 @@ public class Controler implements EventHandler<ActionEvent>{
 					}
 					
 				case "*" :
-					if (calc.accu.size() > 1) {
+					if (calc.getAccu().size() > 1) {
 						calc.multiply();
-						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						gui.getOutput().setText("Pile :\n" +  calc.getAccu().toString());
 						memoire = "";
 						break;
 					}
@@ -68,9 +66,9 @@ public class Controler implements EventHandler<ActionEvent>{
 					}
 					
 				case "/" :
-					if (calc.accu.size() > 1) {
+					if (calc.getAccu().size() > 1) {
 						calc.divide();
-						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						gui.getOutput().setText("Pile :\n" +  calc.getAccu().toString());
 						memoire = "";
 						break;
 					}
@@ -86,7 +84,7 @@ public class Controler implements EventHandler<ActionEvent>{
 							memoire = "-" + memoire;
 						}
 					}
-					gui.input.setText("Entrée : " + memoire);
+					gui.getInput().setText("Entrée : " + memoire);
 					break;
 
 					
@@ -97,12 +95,12 @@ public class Controler implements EventHandler<ActionEvent>{
 					}else {
 						break;
 					}
-					gui.input.setText("Entrée : " + memoire);
+					gui.getInput().setText("Entrée : " + memoire);
 					break;
 					
 				case "C" :
 					memoire = "";
-					gui.input.setText("Entrée : " + memoire);
+					gui.getInput().setText("Entrée : " + memoire);
 					break;
 				
 				case "Entrer" :
@@ -113,20 +111,23 @@ public class Controler implements EventHandler<ActionEvent>{
 						System.out.println(memoire);
 						calc.push(Double.valueOf(memoire));
 						memoire = "";
-						gui.input.setText("Entrée : " + memoire);
-						gui.output.setText("Pile :\n" +  calc.accu.toString());
+						gui.getInput().setText("Entrée : " + memoire);
+						gui.getOutput().setText("Pile :\n" +  calc.getAccu().toString());
 						break;	
 					}
 					
 					
 				default :
 					memoire += (trigger.getText());
-					gui.input.setText("Entrée : " + memoire);
+					gui.getInput().setText("Entrée : " + memoire);
 					break;
 			}
 			
 		}
 		
 	}
+
+
+
 	
 }
