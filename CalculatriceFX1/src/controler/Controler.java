@@ -9,7 +9,7 @@ import model.CalculatorModelInterface;
 import view.CalculatorGUIInterface;
 
 
-public class Controler implements EventHandler<ActionEvent>, ControlerInterface{
+public class Controler implements  EventHandler<ActionEvent>, ControlerInterface{
 
 	public CalculatorGUIInterface gui;
 	public CalculatorModelInterface calc;
@@ -21,6 +21,7 @@ public class Controler implements EventHandler<ActionEvent>, ControlerInterface{
 		this.calc = model;
 		this.memoire = "";
 		gui.affichage();
+		gui.registerEventHandler(this);
 	}
 	
 

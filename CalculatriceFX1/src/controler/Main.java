@@ -12,7 +12,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		CalculatorGUI vue = new CalculatorGUI();
 		CalculatorModel modele = new CalculatorModel();
-		new Controler(vue, modele);
+		Controler controler = new Controler(vue, modele);
 	}
 
 	public static void main(String[] args) {

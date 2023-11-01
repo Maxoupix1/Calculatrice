@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import javafx.scene.control.ScrollPane;
 import controler.Controler;
@@ -19,12 +20,14 @@ import javafx.geometry.*;
 public class CalculatorGUI implements CalculatorGUIInterface{
 	
 	public ArrayList<Button> listeBouton;
-	public ControlerInterface controler;
+	public EventHandler<ActionEvent> controler;
 	public Label output = new Label("Pile : ");
 	public Label input = new Label("Entrée : ");
 	
 	public CalculatorGUI() {
 		this.listeBouton = new ArrayList<>();
+		
+
 	}
 	
 	
@@ -49,7 +52,7 @@ public class CalculatorGUI implements CalculatorGUIInterface{
             for (String label : row) {
                 Button button = new Button(label);
                 button.setMinSize(50, 50);
-                button.setOnAction((EventHandler<ActionEvent>) controler);
+                button.setOnAction(event -> controler.handle(event));
                 rowBox.getChildren().add(button);
             }
             buttonBox.getChildren().add(rowBox);
@@ -83,7 +86,9 @@ public class CalculatorGUI implements CalculatorGUIInterface{
 		return input;
 	}
 	
-
+	public void registerEventHandler(EventHandler<ActionEvent> eventHandler) {
+        this.controler = eventHandler;
+    }
 	
 
 
