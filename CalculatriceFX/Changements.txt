@@ -1,0 +1,3 @@
+Nous avons réalisé quelques changements:
+  - Implémentation des interfaces pour avoir la totale indépendance
+  - Ajout des boutons Swap et Clear, pour respectivement échanger les deux derniers termes de la pile et pour la remmetre à zéro
